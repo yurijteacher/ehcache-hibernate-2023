@@ -1,8 +1,6 @@
 package ua.com.shop.ehcachehibernate2023.service;
 
-import org.hibernate.annotations.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,6 +15,7 @@ import java.util.Optional;
 public class CategoryService {
 
     public static final String KEY = "cacheKey";
+
     private final CategoryRepository categoryRepository;
 
     @Autowired
@@ -25,6 +24,11 @@ public class CategoryService {
     }
 
     //    @Cacheable("category")
+    @CacheEvict(cacheNames = "cat", key = "#root.target.KEY")
+    public void saveNewCategory(Category category) {
+        categoryRepository.save(category);
+    }
+
 
     @Cacheable(value = "cat", key = "#root.target.KEY")
     public List<Category> getAllCategory() {
@@ -43,17 +47,18 @@ public class CategoryService {
 
     }
 
+    @CacheEvict(cacheNames = "cat", key = "#root.target.KEY")
+    public void updateCategory(Category category) {
+        categoryRepository.save(category);
+    }
+
+
+    @CacheEvict(cacheNames = "cat", key = "#root.target.KEY")
     public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);
     }
 
 
-    @CacheEvict(cacheNames = "category", key = "#category.getId()")
-    public void updateCategory(Category category) {
-        categoryRepository.save(category);
-    }
 
-    public void saveNewCategory(Category category) {
-        categoryRepository.save(category);
-    }
+
 }

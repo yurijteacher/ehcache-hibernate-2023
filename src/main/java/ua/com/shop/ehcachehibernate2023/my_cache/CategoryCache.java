@@ -30,7 +30,6 @@ public class CategoryCache implements MyCache<Long, Category>{
     }
 
     public void print(){
-
         for (Map.Entry<Long, Category> el :
              cache.entrySet()) {
         logger.info(el.getKey() +" :" + el.getValue() + ",");

@@ -92,6 +92,21 @@
     </tbody>
 </table>
 
+<h2> Delete </h2>
+
+
+<form action="/delete" method="post">
+<select name="id">
+    <#if categories??>
+        <#list categories as category>
+            <li>
+                <option value="${category.id}">${category.name}</option>
+            </li>
+        </#list>
+    </#if>
+</select>
+    <button type="submit">delete</button>
+</form>
 
 </body>
 </html>
